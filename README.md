@@ -16,8 +16,11 @@ It contains key logic of the application and provides it's main functionality. T
 ## Tech stack
 
 **Programming language**: Java 21
+
 **Framework**: Spring Framework 6
+
 **DBMS**: PostgreSQL 14
+
 **Other tools**: Spring Boot, Spring Data JPA, Spring Web MVC, Lombok, log4j, JUnit and others... You can see a list of all dependencies in pom.xml file.
 
 ## Miscellanious
