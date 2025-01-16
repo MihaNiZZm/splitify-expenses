@@ -1,4 +1,4 @@
-package ru.mihanizzm.splitify.splitifyexpenses.domain.entity;
+package ru.mihanizzm.splitify.splitifyexpenses.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package ru.mihanizzm.splitify.splitifyexpenses.domain.entity;
+package ru.mihanizzm.splitify.splitifyexpenses.models;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,24 +14,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(schema = "main", name = "expenses")
-public class Expense {
+@Table(schema = "main", name = "events")
+public class Event {
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
-
-    @Column(name = "amount", nullable = false)
-    private BigDecimal amount;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -42,18 +38,16 @@ public class Expense {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "payer_id", referencedColumnName = "id", nullable = false)
-    private User payer;
+    @Column(name = "ended_at")
+    private LocalDateTime endedAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "currency_id", referencedColumnName = "id", nullable = false)
-    private Currency currency;
+    @JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = false)
+    private User eventCreator;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
-    private Event event;
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<Expense> expenses;
 
-    @OneToMany(mappedBy = "expense", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<ExpenseShare> shares;
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<EventParticipants> participants;
 }

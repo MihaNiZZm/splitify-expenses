@@ -1,4 +1,4 @@
-package ru.mihanizzm.splitify.splitifyexpenses.domain.entity;
+package ru.mihanizzm.splitify.splitifyexpenses.models;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.mihanizzm.splitify.splitifyexpenses.domain.entity.id.ExpenseShareId;
+import ru.mihanizzm.splitify.splitifyexpenses.models.id.ExpenseShareId;
 
 import java.math.BigDecimal;
 

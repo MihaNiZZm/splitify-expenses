@@ -1,4 +1,4 @@
-package ru.mihanizzm.splitify.splitifyexpenses.domain.entity;
+package ru.mihanizzm.splitify.splitifyexpenses.models;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,20 +14,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(schema = "main", name = "events")
-public class Event {
+@Table(schema = "main", name = "expenses")
+public class Expense {
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
+
+    @Column(name = "amount", nullable = false)
+    private BigDecimal amount;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -38,13 +42,18 @@ public class Event {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "ended_at")
-    private LocalDateTime endedAt;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "payer_id", referencedColumnName = "id", nullable = false)
+    private User payer;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = false)
-    private User eventCreator;
+    @JoinColumn(name = "currency_id", referencedColumnName = "id", nullable = false)
+    private Currency currency;
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<Expense> expenses;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
+    private Event event;
+
+    @OneToMany(mappedBy = "expense", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<ExpenseShare> shares;
 }
