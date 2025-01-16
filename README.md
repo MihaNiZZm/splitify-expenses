@@ -19,9 +19,9 @@ It contains key logic of the application and provides it's main functionality. T
 
 **Framework**: Spring Framework 6
 
-**DBMS**: PostgreSQL 14
+**DBMS**: PostgreSQL 17
 
-**Other tools**: Spring Boot, Spring Data JPA, Spring Web MVC, Lombok, log4j, JUnit and others... You can see a list of all dependencies in pom.xml file.
+**Other tools**: Spring Boot, Spring Data JPA, Spring Web MVC, Lombok, slf4j, logback, JUnit and others... You can see a list of all dependencies in pom.xml file.
 
 ## Miscellanious
 
