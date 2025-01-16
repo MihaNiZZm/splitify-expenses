@@ -7,27 +7,32 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(schema = "main", name = "events")
-public class Event {
+@Table(schema = "main", name = "payment_details")
+public class PaymentDetails {
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "currency_id", referencedColumnName = "id", nullable = false)
+    private Currency currency;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -35,16 +40,6 @@ public class Event {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "ended_at")
-    private LocalDateTime endedAt;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "creator_id", referencedColumnName = "id", nullable = false)
-    private User eventCreator;
-
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<Expense> expenses;
+    @Column(name = "is_primary", nullable = false)
+    private boolean isPrimary;
 }

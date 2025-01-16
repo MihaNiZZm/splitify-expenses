@@ -1,6 +1,12 @@
 package ru.mihanizzm.splitify.splitifyexpenses.domain.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,5 +48,11 @@ public class User {
     private List<Event> createdEvents;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "payer", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<Event> paidEvents;
+    private List<Expense> paidExpenses;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sharePayer", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<ExpenseShare> paidShares;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<PaymentDetails> paymentDetailsList;
 }
