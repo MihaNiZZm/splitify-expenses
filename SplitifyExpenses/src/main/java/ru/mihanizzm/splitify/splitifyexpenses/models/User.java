@@ -62,4 +62,13 @@ public class User {
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private UserPreferences preferences;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "changedByUser", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<AuditExpenses> changedExpenses;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "creator", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<EventInvitation> createdInvitations;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "changedByUser", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<AuditEvents> changedEvents;
 }

@@ -1,6 +1,5 @@
 package ru.mihanizzm.splitify.splitifyexpenses.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -20,24 +19,23 @@ import ru.mihanizzm.splitify.splitifyexpenses.util.JsonbToStringConverter;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
+@Setter
 @Entity
-@Table(schema = "main", name = "audit_expenses")
-public class AuditExpenses {
+@Table(schema = "main", name = "audit_events")
+public class AuditEvents {
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
 
+    @JoinColumn(name = "event_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "expense_id", referencedColumnName = "id", nullable = false)
-    private Expense expense;
+    private Event event;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "changed_by_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private User changedByUser;
 
     @Column(name = "change_type", nullable = false)

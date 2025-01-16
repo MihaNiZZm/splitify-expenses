@@ -56,4 +56,7 @@ public class Expense {
 
     @OneToMany(mappedBy = "expense", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<ExpenseShare> shares;
+
+    @OneToMany(mappedBy = "expense", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<AuditExpenses> changes;
 }

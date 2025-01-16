@@ -50,4 +50,10 @@ public class Event {
 
     @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<EventParticipants> participants;
+
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<EventInvitation> invitations;
+
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<AuditEvents> changes;
 }
